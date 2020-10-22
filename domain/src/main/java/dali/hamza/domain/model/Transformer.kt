@@ -1,6 +1,13 @@
 package dali.hamza.domain.model
+
+import com.google.gson.annotations.SerializedName
+
 enum class TeamTransformer(val v:String) {
-    AUTOBOTS("A"),DECEPTICON("D")
+    @SerializedName("A")
+
+    AUTOBOTS("A"),
+    @SerializedName("D")
+    DECEPTICON("D"),
 }
 data class Transformer(
     val name: String,

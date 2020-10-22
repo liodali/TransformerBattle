@@ -6,7 +6,7 @@ import dali.hamza.domain.model.Transformer
 import dali.hamza.domain.repository.ITransformerRepository
 import javax.inject.Inject
 
-class RetrieveTransformListInteractor @Inject constructor(
+class RetrieveListTransformersInteractor @Inject constructor(
     private val repository: ITransformerRepository
 ) : UseCase<Any, Result<List<Transformer>>> {
     override suspend fun invoke(parameter: Any): Result<List<Transformer>> {

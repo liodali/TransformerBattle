@@ -1,5 +1,6 @@
 package dali.hamza.core.repository
 
+import dali.hamza.core.Utilities.SessionManager
 import dali.hamza.core.networking.TransformerApi
 import dali.hamza.domain.model.*
 import dali.hamza.domain.repository.ITransformerRepository
@@ -28,13 +29,18 @@ fun <T : Any> Response<T>.data(): Result<T> {
 }
 
 
-class TransformerRepository @Inject constructor(private val api: TransformerApi) : BaseRepository(),
+class TransformerRepository @Inject constructor(
+    private val api: TransformerApi,
+    private val session: SessionManager,
+) :
+    BaseRepository(),
     ITransformerRepository {
     override suspend fun getAll(): Result<List<Transformer>> {
         return try {
+            val token: String = session.getValue(SessionManager.tokenKey) as String
             fetchData(
                 dataProvider = {
-                    api.getTransformers("").data()
+                    api.getTransformers("${SessionManager.bearer}${token}").data()
                 }
             )
 
