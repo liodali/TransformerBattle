@@ -1,6 +1,6 @@
 package dali.hamza.domain.model
-enum class TeamTransformer {
-    AUTOBOTS,DECEPTICON
+enum class TeamTransformer(val v:String) {
+    AUTOBOTS("A"),DECEPTICON("D")
 }
 data class Transformer(
     val name: String,
