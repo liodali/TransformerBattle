@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TransformerWar</string>
+
+
+    <string-array name="feature_name_transformer">
+        <item>strength</item>
+        <item>intelligence</item>
+        <item>speed</item>
+        <item>endurance</item>
+        <item>rank</item>
+        <item>courage</item>
+        <item>firepower</item>
+        <item>skill</item>
+    </string-array>
+
 </resources>

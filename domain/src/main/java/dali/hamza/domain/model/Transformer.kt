@@ -14,6 +14,7 @@ data class Transformer(
     val team: TeamTransformer,
     val strength: Int,
     val intelligence: Int,
+    val speed: Int,
     val endurance: Int,
     val rank: Int,
     val courage: Int,
