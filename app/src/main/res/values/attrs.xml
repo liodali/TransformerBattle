@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TransformerCount">
+        <attr name="count" format="integer"/>
+        <attr name="team" format="string">
+            <enum name="AUTOBOTS" value="0" />
+            <enum name="DECEPTICONS" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="TransformerInputFeature">
+        <attr name="value" format="integer"/>
+        <attr name="name" format="string"/>
+        <attr name="iconDrawable" format="reference"/>
+    </declare-styleable>
+</resources>

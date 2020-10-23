@@ -11,18 +11,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TransformerWar">
-        <activity android:name=".ui.activities.CreateTransformerActivity"/>
 
-        <activity android:name=".ui.activities.WelcomeActivity">
+        <activity android:name=".ui.activities.WelcomeActivity" android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".ui.activities.MainActivity"/>
 
-        </activity>
+        <activity android:name=".ui.activities.CreateTransformerActivity"/>
 
     </application>
 

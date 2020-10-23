@@ -6,4 +6,124 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.CreateTransformerActivity">
 
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/id_cancel_create_modify_transformer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="cnacel"
+            android:background="@drawable/cancel_button"
+            android:text="@string/cancel_label"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_transformer_button"
+            android:text="@string/create_label"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_axe"
+                app:name="@string/strength"
+                app:value="5"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_intelligence"
+                app:name="@string/intelligence"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_speed"
+                app:name="@string/speed"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_endurance"
+                app:name="@string/endurance"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_rank"
+                app:name="@string/rank"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_courage"
+                app:name="@string/courage"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_power_fire"
+                app:name="@string/firepower"
+                app:value="1"
+                />
+            <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/ic_skill"
+                app:name="@string/skill"
+                app:value="1"
+                />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

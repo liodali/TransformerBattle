@@ -15,4 +15,9 @@
         <item name="android:textColor">@color/black</item>
 
     </style>
+
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/welcome_theme</item>
+        <item name="colorPrimaryDark">@color/white</item>
+    </style>
 </resources>

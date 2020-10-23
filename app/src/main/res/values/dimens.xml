@@ -2,6 +2,7 @@
 <resources>
     <dimen name="size_item_feature_transformer">96dp</dimen>
     <dimen name="size_icon_feature_transformer">48dp</dimen>
+    <dimen name="size_icon_header_transformer">24dp</dimen>
     <dimen name="size_name_feature_transformer">14dp</dimen>
     <dimen name="size_progress_bar_feature_transformer">18dp</dimen>
 </resources>

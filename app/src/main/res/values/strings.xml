@@ -1,16 +1,28 @@
 <resources>
     <string name="app_name">TransformerWar</string>
+    <string name="battle">battle</string>
+    <string name="cancel_label">cancel</string>
+    <string name="create_label">Create</string>
+
+    <string name="strength">strength</string>
+    <string name="intelligence">intelligence</string>
+    <string name="speed">speed</string>
+    <string name="endurance">endurance</string>
+    <string name="rank">rank</string>
+    <string name="courage">courage</string>
+    <string name="firepower">firepower</string>
+    <string name="skill">skill</string>
 
 
     <string-array name="feature_name_transformer">
-        <item>strength</item>
-        <item>intelligence</item>
-        <item>speed</item>
-        <item>endurance</item>
-        <item>rank</item>
-        <item>courage</item>
-        <item>firepower</item>
-        <item>skill</item>
+        <item>@string/strength</item>
+        <item>@string/intelligence</item>
+        <item>@string/speed</item>
+        <item>@string/endurance</item>
+        <item>@string/rank</item>
+        <item>@string/courage</item>
+        <item>@string/firepower</item>
+        <item>@string/skill</item>
     </string-array>
 
 </resources>
