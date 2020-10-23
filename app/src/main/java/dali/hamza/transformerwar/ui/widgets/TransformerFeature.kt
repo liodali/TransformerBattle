@@ -4,12 +4,14 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.*
-import dali.hamza.transformerwar.R
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import dali.hamza.transformerwar.databinding.GenericFeatureTransformerBinding
 
 class TransformerFeature(context: Context, attrs: AttributeSet?, defStyle: Int?) :
-    LinearLayout(context, attrs, defStyle!!)  {
+    LinearLayout(context, attrs, defStyle!!) {
 
     constructor(context: Context, attrs: AttributeSet) : this(
         context,
@@ -17,38 +19,46 @@ class TransformerFeature(context: Context, attrs: AttributeSet?, defStyle: Int?)
         0
     )
 
-    constructor(context: Context,featureValue:Int,name:String,iconDrawable:Drawable) : this(context, null, 0){
-        this.featureValue=featureValue
-        this.iconDrawable=iconDrawable
-        this.nameText=name
+    constructor(context: Context, featureValue: Int, name: String, iconDrawable: Drawable) : this(
+        context,
+        null,
+        0
+    ) {
+        this.featureValue = featureValue
+        this.iconDrawable = iconDrawable
+        this.nameText = name
     }
-    private  var featureValue:Int=0
-    private  var nameText:String="0"
-    private lateinit var iconDrawable:Drawable
-    private  var iconFeature:ImageView
-    private  var valueFeature:ProgressBar
-    private  var nameFeature: TextView
+
+    private var featureValue: Int = 0
+    private var nameText: String = "0"
+    private lateinit var iconDrawable: Drawable
+    private var iconFeature: ImageView
+    private var valueFeature: ProgressBar
+    private var nameFeature: TextView
+    private var binding: GenericFeatureTransformerBinding
 
     init {
-        val inflater:LayoutInflater= context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view: View =inflater.inflate(R.layout.generic_feature_transformer,this,true)
-        iconFeature=view.findViewById(R.id.id_generic_icon_feature_transformer)
-        valueFeature=view.findViewById(R.id.id_generic_value_feature_transformer)
-        nameFeature=view.findViewById(R.id.id_generic_name_feature_transformer)
+        val inflater: LayoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        binding = GenericFeatureTransformerBinding.inflate(inflater, this, true)
+        iconFeature = binding.idGenericIconFeatureTransformer
+        valueFeature = binding.idGenericValueFeatureTransformer
+        nameFeature = binding.idGenericNameFeatureTransformer
     }
 
 
-    fun setNameFeature(name:String){
-        this.nameText=name
-        nameFeature.text=this.nameText
-    }
-    fun setValueFeature(value:Int){
-        this.featureValue=value
-        valueFeature.progress=this.featureValue
+    fun setNameFeature(name: String) {
+        this.nameText = name
+        nameFeature.text = this.nameText
     }
 
-    fun setIconDrawable(iconDrawable:Drawable){
-        this.iconDrawable=iconDrawable
+    fun setValueFeature(value: Int) {
+        this.featureValue = value
+        valueFeature.progress = this.featureValue
+    }
+
+    fun setIconDrawable(iconDrawable: Drawable) {
+        this.iconDrawable = iconDrawable
         iconFeature.setImageDrawable(this.iconDrawable)
     }
 

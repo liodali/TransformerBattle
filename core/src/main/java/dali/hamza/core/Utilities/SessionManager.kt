@@ -3,9 +3,10 @@ package dali.hamza.core.Utilities
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class SessionManager @Inject constructor(private val application: Application) {
+class SessionManager @Inject constructor(@ApplicationContext application: Application) {
 
     var preference:SharedPreferences=application.getSharedPreferences(namePreference,MODE_PRIVATE)
 

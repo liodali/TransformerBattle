@@ -21,3 +21,7 @@ data class Transformer(
     val firePower: Int,
     val skill: Int,
 )
+data class GameResult(
+    val winner:TeamTransformer,
+
+)

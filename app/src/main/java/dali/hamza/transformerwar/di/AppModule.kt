@@ -1,6 +1,7 @@
 package dali.hamza.transformerwar.di
 
 import android.app.Application
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,12 +48,8 @@ object AppModule {
     fun provideTransformerApi(retrofit: Retrofit) = retrofit.create(TransformerApi::class.java)
 
 
-    @Singleton
-    @Provides
-    fun provideSessionManager(@ApplicationContext appContext: Application): SessionManager {
-        return SessionManager(application = appContext)
-    }
 
+/*
     @Provides
     fun provideTransformerRepository(repository: TransformerRepository): ITransformerRepository =
         repository
@@ -62,5 +59,5 @@ object AppModule {
     fun provideRetrieveListTransformersInteractor(repository: ITransformerRepository): RetrieveListTransformersInteractor=
         RetrieveListTransformersInteractor(repository)
 
-
+*/
 }

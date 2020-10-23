@@ -1,14 +1,55 @@
 package dali.hamza.transformerwar.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dagger.hilt.EntryPoint
-import dali.hamza.transformerwar.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
+import dali.hamza.domain.model.TeamTransformer
+import dali.hamza.domain.model.Transformer
+import dali.hamza.transformerwar.databinding.ActivityMainBinding
+import dali.hamza.transformerwar.ui.adapter.TransformerAdapter
 
-@EntryPoint
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var startBattle: FloatingActionButton
+    private lateinit var adapter: TransformerAdapter
+    private var listTransformers:MutableList<Transformer> = emptyList<Transformer>().toMutableList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initUI()
+        initList()
+
     }
+
+    private fun initUI() {
+        recyclerView = binding.idRecyclerViewTransformers
+        startBattle = binding.floatingActionButton
+        adapter = TransformerAdapter(listTransformers)
+        recyclerView.adapter = adapter
+
+    }
+
+    private fun initList() {
+        listTransformers.add(
+            Transformer(
+                "optimus prime", TeamTransformer.AUTOBOTS, 10, 10, 10, 10, 10, 10, 10,
+                10,
+            )
+        )
+        listTransformers.add(
+            Transformer(
+                "megatron", TeamTransformer.DECEPTICON, 9, 10, 10, 10, 10, 9, 10,
+                10,
+            )
+        )
+        adapter.notifyDataSetChanged()
+    }
+
 }

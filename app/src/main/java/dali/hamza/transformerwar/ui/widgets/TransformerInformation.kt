@@ -31,7 +31,7 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
         if (transformer == null) {
             transformer = Transformer("", TeamTransformer.AUTOBOTS, 0, 0, 0, 0, 0, 0, 0, 0)
         }
-        orientation = VERTICAL
+        orientation = HORIZONTAL
         layoutParams = LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -40,7 +40,7 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
 
     }
 
-    fun generateItems() {
+    private fun generateItems() {
         val values = listOf<Int>(
             this.transformer!!.strength,
             this.transformer!!.intelligence,
@@ -79,7 +79,15 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
             this.transformer!!.skill,
         )
         for (x in 0..6) {
+            val drawable =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    context.getDrawable(Utilities.drawableIcons[x])
+                } else {
+                    context.resources.getDrawable(Utilities.drawableIcons[x])
+                }
             listViewFeature[x].setValueFeature(value = values[x])
+            listViewFeature[x].setNameFeature(name = listNames[x])
+            listViewFeature[x].setIconDrawable(iconDrawable = drawable!!)
         }
 
 
