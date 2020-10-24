@@ -12,6 +12,7 @@
     <string name="courage">courage</string>
     <string name="firepower">firepower</string>
     <string name="skill">skill</string>
+    <string name="transformer_name_label_hint">Transformer name</string>
 
 
     <string-array name="feature_name_transformer">

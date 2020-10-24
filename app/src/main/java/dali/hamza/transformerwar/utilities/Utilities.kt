@@ -4,7 +4,9 @@ import dali.hamza.transformerwar.R
 
 class Utilities {
     companion object {
-        val BASE_URL = "https://transformers-api.firebaseapp.com"
+        const val TEAM_TRANSFORMER: String = "TEAM_TRANSFORMER"
+        const val ID_TRANSFORMER: String = "ID_TRANSFORMER"
+        const val BASE_URL = "https://transformers-api.firebaseapp.com"
         val drawableIcons = listOf<Int>(
             R.drawable.ic_axe,
             R.drawable.ic_intelligence,
