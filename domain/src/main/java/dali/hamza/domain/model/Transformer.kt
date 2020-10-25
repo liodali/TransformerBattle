@@ -2,20 +2,26 @@ package dali.hamza.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-enum class TeamTransformer(val v:String) {
+enum class TeamTransformer(val v: String) {
     @SerializedName("A")
 
     AUTOBOTS("A"),
+
     @SerializedName("D")
     DECEPTICON("D"),
 }
+
 data class TransformerList(
     @SerializedName("transformers")
-    val transformers:List<Transformer>
+    val transformers: List<Transformer>
 )
 
+fun Transformer.ratingRank(): Int {
+    return this.strength + this.intelligence + this.speed + this.endurance + this.rank + this.courage + this.firePower + this.skill
+}
+
 data class Transformer(
-    val id:String="",
+    val id: String = "",
     val name: String,
     val team: TeamTransformer,
     val strength: Int,
@@ -28,7 +34,18 @@ data class Transformer(
     val firePower: Int,
     val skill: Int,
 )
-data class GameResult(
-    val winner:TeamTransformer,
 
+data class GameResult(
+    var winner: TeamTransformer?=null,
+    var isFinished: Boolean = false,
+    var currentBattle: Battle,
+    var previousBattles: MutableList<Battle> = emptyList<Battle>().toMutableList(),
+    var survivors: MutableList<Transformer> = emptyList<Transformer>().toMutableList(),
+)
+
+data class Battle(
+    val autobot: Transformer,
+    val deception: Transformer,
+    var winnerBattle: TeamTransformer?=null,
+    var isDestroyed:Boolean=false,
 )
