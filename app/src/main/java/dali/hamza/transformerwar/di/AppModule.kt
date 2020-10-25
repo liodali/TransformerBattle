@@ -1,17 +1,18 @@
 package dali.hamza.transformerwar.di
 
 import android.app.Application
-import dagger.Binds
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dali.hamza.core.interactor.RetrieveListTransformersInteractor
 import dali.hamza.core.networking.TransformerApi
+import dali.hamza.core.repository.AppRepository
 import dali.hamza.core.repository.TransformerRepository
+import dali.hamza.core.utilities.SessionManager
+import dali.hamza.domain.repository.IAppRepository
 import dali.hamza.domain.repository.ITransformerRepository
-import dali.hamza.core.Utilities.SessionManager
 import dali.hamza.transformerwar.utilities.Utilities
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,39 +26,42 @@ object AppModule {
     @Provides
     fun provideBaseUrl() = Utilities.BASE_URL
 
-    @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-    }
+    fun provideGson(): Gson = GsonBuilder()
+        .setLenient()
+        .create()
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String, gson: Gson): Retrofit =
+        Retrofit.Builder()
+            //.addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
 
     @Provides
     @Singleton
     fun provideTransformerApi(retrofit: Retrofit) = retrofit.create(TransformerApi::class.java)
 
 
-
-/*
     @Provides
     fun provideTransformerRepository(repository: TransformerRepository): ITransformerRepository =
         repository
 
+    @Provides
+    fun provideAppRepository(repository: AppRepository): IAppRepository =
+        repository
 
     @Provides
-    fun provideRetrieveListTransformersInteractor(repository: ITransformerRepository): RetrieveListTransformersInteractor=
-        RetrieveListTransformersInteractor(repository)
+    fun provideSessionManager(application: Application): SessionManager =
+        SessionManager(application)
 
-*/
+
 }

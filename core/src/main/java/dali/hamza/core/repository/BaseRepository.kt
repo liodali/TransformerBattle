@@ -7,7 +7,7 @@ abstract  class BaseRepository{
     /**
      * Use this when communicating only with the api service
      */
-    protected suspend  fun <T:Any> fetchData(dataProvider: () -> Result<T>): Result<T> {
+    protected   fun <T:Any> fetchData(dataProvider: () -> Result<T>): Result<T> {
         return dataProvider()
     }
 }

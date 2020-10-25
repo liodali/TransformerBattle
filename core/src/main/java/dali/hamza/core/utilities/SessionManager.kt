@@ -1,4 +1,4 @@
-package dali.hamza.core.Utilities
+package dali.hamza.core.utilities
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE

@@ -10,6 +10,7 @@ enum class TeamTransformer(val v:String) {
     DECEPTICON("D"),
 }
 data class Transformer(
+    val id:String="",
     val name: String,
     val team: TeamTransformer,
     val strength: Int,
@@ -18,6 +19,7 @@ data class Transformer(
     val endurance: Int,
     val rank: Int,
     val courage: Int,
+    @SerializedName("firepower")
     val firePower: Int,
     val skill: Int,
 )

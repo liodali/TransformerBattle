@@ -2,6 +2,7 @@ package dali.hamza.transformerwar.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var startBattle: ExtendedFloatingActionButton
-    private lateinit var createTransformerButton: MaterialButton
     private lateinit var adapter: TransformerAdapter
     private var listTransformers: MutableList<Transformer> =
         emptyList<Transformer>().toMutableList()
@@ -32,17 +32,11 @@ class MainActivity : AppCompatActivity() {
         initList()
 
 
-        createTransformerButton.setOnClickListener {
-            val intent = Intent(this, CreateTransformerActivity::class.java)
-            intent.putExtra(Utilities.TEAM_TRANSFORMER, TeamTransformer.AUTOBOTS.v)
-            startActivity(intent)
-        }
     }
 
     private fun initUI() {
         recyclerView = binding.idRecyclerViewTransformers
         startBattle = binding.floatingActionButton
-        createTransformerButton = binding.idCreateTransformerBt
         adapter = TransformerAdapter(listTransformers)
         recyclerView.adapter = adapter
 
@@ -51,18 +45,40 @@ class MainActivity : AppCompatActivity() {
     private fun initList() {
         listTransformers.add(
             Transformer(
-                "optimus prime", TeamTransformer.AUTOBOTS, 10, 10, 10, 10, 10, 10, 10,
+                id = "", "optimus prime", TeamTransformer.AUTOBOTS, 10, 10, 10, 10, 10, 10, 10,
                 10,
             )
         )
         listTransformers.add(
             Transformer(
-                "megatron", TeamTransformer.DECEPTICON, 9, 10, 10, 10, 10, 9, 10,
+                id = "", "megatron", TeamTransformer.DECEPTICON, 9, 10, 10, 10, 10, 9, 10,
                 10,
             )
         )
         adapter.notifyDataSetChanged()
     }
+   fun createTransformer(view:View){
+       val intent = Intent(this, CreateTransformerActivity::class.java)
+       intent.putExtra(Utilities.TEAM_TRANSFORMER, TeamTransformer.AUTOBOTS.v)
+       startActivityForResult(intent,Utilities.CreateTransformerResquestCode)
+   }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            Utilities.CreateTransformerResquestCode -> {
+                if (resultCode == RESULT_OK) {
 
+                }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+
+    }
 
 }

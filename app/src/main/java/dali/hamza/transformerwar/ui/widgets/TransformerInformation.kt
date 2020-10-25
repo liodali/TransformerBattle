@@ -29,7 +29,7 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
 
     init {
         if (transformer == null) {
-            transformer = Transformer("", TeamTransformer.AUTOBOTS, 0, 0, 0, 0, 0, 0, 0, 0)
+            transformer = Transformer(id = "", "", TeamTransformer.AUTOBOTS, 0, 0, 0, 0, 0, 0, 0, 0)
         }
         orientation = HORIZONTAL
         layoutParams = LayoutParams(

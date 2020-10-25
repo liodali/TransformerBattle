@@ -77,7 +77,9 @@ class TransformerInputFeature(context: Context, attrs: AttributeSet?, defStyle: 
     }
 
 
-
+    fun getValue() :Int{
+        return progressBarValue.progress
+    }
     fun setProgressValue(value: Int) {
         this.value = value
         progressBarValue.progress = this.value

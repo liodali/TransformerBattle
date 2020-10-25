@@ -1,19 +1,30 @@
 package dali.hamza.transformerwar.ui.activities
 
+import android.app.Dialog
+import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Observer
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import dali.hamza.domain.model.Success
 import dali.hamza.domain.model.TeamTransformer
+import dali.hamza.domain.model.Transformer
 import dali.hamza.transformerwar.R
 import dali.hamza.transformerwar.databinding.ActivityCreateTransformerBinding
+import dali.hamza.transformerwar.ui.dialog.ProgressDialog
 import dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
 import dali.hamza.transformerwar.utilities.Utilities
+import dali.hamza.transformerwar.viewmodels.CreateOrModifyViewModel
 
+@AndroidEntryPoint
 class CreateTransformerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateTransformerBinding
     private lateinit var appBarLayout: AppBarLayout
@@ -24,6 +35,9 @@ class CreateTransformerActivity : AppCompatActivity() {
 
     private var idTransformer: String? = null
     private var teamTransformer: TeamTransformer = TeamTransformer.AUTOBOTS
+
+    private val viewModelCreate: CreateOrModifyViewModel by viewModels()
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +59,9 @@ class CreateTransformerActivity : AppCompatActivity() {
         createOrModifyBt = binding.idCreateOrModifyTransformer
 
         title = if (teamTransformer == TeamTransformer.AUTOBOTS) {
-            "Create new Autobot"
+            resources.getString(R.string.create_autobot_title)
         } else {
-            "Create new Decepticon"
+            resources.getString(R.string.create_decepticon_title)
         }
 
         val colorID = if (teamTransformer == TeamTransformer.AUTOBOTS) {
@@ -73,6 +87,9 @@ class CreateTransformerActivity : AppCompatActivity() {
 
             }
         }
+
+        editInputLayout.boxStrokeColor = resources.getColor(colorID)
+        editInputLayout.hintTextColor = ColorStateList.valueOf(resources.getColor(colorID))
         editInputLayout.editText!!.doOnTextChanged { text, _, _, _ ->
             createOrModifyBt.isEnabled = !(text!!.isEmpty() || text!!.isBlank())
         }
@@ -82,10 +99,53 @@ class CreateTransformerActivity : AppCompatActivity() {
             resources.getDrawable(R.drawable.custom_button_decepticon)
 
         }
+        listTransformerInput.addAll(
+            arrayListOf(
+                binding.idStrengthInformationInput,
+                binding.idIntelligenceInformationInput,
+                binding.idSpeedInformationInput,
+                binding.idEnduranceInformationInput,
+                binding.idRankInformationInput,
+                binding.idCourageInformationInput,
+                binding.idFirePowerInformationInput,
+                binding.idSkillInformationInput,
+            )
+        )
+        viewModelCreate.getResult().observe(this, Observer { result ->
+            if (result != null) {
+                dialog?.cancel()
+                if (result is Success<String>) {
+                    val intentResult =
+                        Intent().putExtra(Utilities.ID_TRANSFORMER, result.data)
+                    setResult(RESULT_OK, intentResult)
+                    finish()//Utilities.CreateTransformerResquestCode
+                } else {
+
+                }
+            }
+        })
     }
 
     fun createOrModify(view: View) {
-
+        val transformer = Transformer(
+            id="",
+            editInputLayout.editText!!.text.toString(),
+            team = teamTransformer,
+            strength = listTransformerInput[0].getValue(),
+            intelligence = listTransformerInput[1].getValue(),
+            speed = listTransformerInput[2].getValue(),
+            endurance = listTransformerInput[3].getValue(),
+            rank = listTransformerInput[4].getValue(),
+            courage = listTransformerInput[5].getValue(),
+            firePower = listTransformerInput[6].getValue(),
+            skill = listTransformerInput[7].getValue(),
+        )
+        dialog = ProgressDialog.progressDialog(
+            this,
+            resources.getString(R.string.loading_create_transformer, transformer.name)
+        )
+        dialog!!.show()
+        viewModelCreate.create(transformer)
     }
 
     fun cancel(view: View) {

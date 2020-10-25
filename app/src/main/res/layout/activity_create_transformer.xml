@@ -33,11 +33,14 @@
             android:id="@+id/id_name_transformer_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:hint="@string/transformer_name_label_hint">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +65,7 @@
             android:orientation="vertical">
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_strength_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_axe"
@@ -69,6 +73,7 @@
                 app:value="5" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_intelligence_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_intelligence"
@@ -76,6 +81,8 @@
                 app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_speed_information_input"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_speed"
@@ -83,6 +90,7 @@
                 app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_endurance_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_endurance"
@@ -90,14 +98,16 @@
                 app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_rank_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_rank"
                 app:name="@string/rank"
-                app:value="1"/>
+                app:value="1" />
 
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_courage_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_courage"
@@ -105,6 +115,7 @@
                 app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_fire_power_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_power_fire"
@@ -112,6 +123,7 @@
                 app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
+                android:id="@+id/id_skill_information_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_skill"

@@ -1,6 +1,6 @@
 package dali.hamza.core.repository
 
-import dali.hamza.core.Utilities.SessionManager
+import dali.hamza.core.utilities.SessionManager
 import dali.hamza.core.networking.TransformerApi
 import dali.hamza.domain.model.*
 import dali.hamza.domain.repository.ITransformerRepository
@@ -24,7 +24,7 @@ fun <T : Any> Response<T>.data(): Result<T> {
         onFailure { return Failure(it) }
         return Failure(AppError(Throwable("GENERAL_NETWORK_ERROR")))
     } catch (e: Exception) {
-        return Failure(AppError(Throwable("GENERAL_NETWORK_ERROR")))
+        return Failure(AppError(e.fillInStackTrace()))
     }
 }
 
@@ -38,23 +38,32 @@ class TransformerRepository @Inject constructor(
     override suspend fun getAll(): Result<List<Transformer>> {
         return try {
             val token: String = session.getValue(SessionManager.tokenKey) as String
-            fetchData(
-                dataProvider = {
-                    api.getTransformers("${SessionManager.bearer}${token}").data()
-                }
-            )
+            api.getTransformers("${SessionManager.bearer}${token}").data()
 
 
         } catch (e: Exception) {
             Failure(
-                AppError(Throwable(""), 400)
+                AppError(Throwable("${e.message}"), 400)
             )
         }
 
     }
 
     override suspend fun insertTransformer(transformer: Transformer): Result<String> {
-        TODO("Not yet implemented")
+        return try {
+            val token: String = session.getValue(SessionManager.tokenKey) as String
+            val result=api.addNewTransformers("${SessionManager.bearer}${token}",transformer).data()
+            return if(result is Success<Transformer>){
+                Success(result.data.id)
+            }else{
+                Failure(AppError(Throwable("error to create transformer")))
+            }
+
+        } catch (e: Exception) {
+            Failure(
+                AppError(Throwable("${e.message}"), 400)
+            )
+        }
     }
 
     override suspend fun update(transformer: Transformer) {
