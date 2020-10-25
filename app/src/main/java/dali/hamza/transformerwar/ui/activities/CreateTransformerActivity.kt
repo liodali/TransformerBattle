@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import com.google.android.material.appbar.AppBarLayout
@@ -25,7 +24,7 @@ import dali.hamza.transformerwar.utilities.Utilities
 import dali.hamza.transformerwar.viewmodels.CreateOrModifyViewModel
 
 @AndroidEntryPoint
-class CreateTransformerActivity : AppCompatActivity() {
+class CreateTransformerActivity : BaseActivity() {
     private lateinit var binding: ActivityCreateTransformerBinding
     private lateinit var appBarLayout: AppBarLayout
     private var listTransformerInput: MutableList<TransformerInputFeature> =
@@ -113,7 +112,10 @@ class CreateTransformerActivity : AppCompatActivity() {
         )
         viewModelCreate.getResult().observe(this, Observer { result ->
             if (result != null) {
-                dialog?.cancel()
+                if (dialog != null) {
+                    dismissDialog(dialog)
+                    dialog = null
+                }
                 if (result is Success<String>) {
                     val intentResult =
                         Intent().putExtra(Utilities.ID_TRANSFORMER, result.data)
@@ -121,6 +123,7 @@ class CreateTransformerActivity : AppCompatActivity() {
                     finish()//Utilities.CreateTransformerResquestCode
                 } else {
 
+                    showSnackBar(getString(R.string.errorCreateTransformer), binding.root)
                 }
             }
         })
@@ -128,7 +131,7 @@ class CreateTransformerActivity : AppCompatActivity() {
 
     fun createOrModify(view: View) {
         val transformer = Transformer(
-            id="",
+            id = "",
             editInputLayout.editText!!.text.toString(),
             team = teamTransformer,
             strength = listTransformerInput[0].getValue(),
@@ -144,7 +147,7 @@ class CreateTransformerActivity : AppCompatActivity() {
             this,
             resources.getString(R.string.loading_create_transformer, transformer.name)
         )
-        dialog!!.show()
+        showDialog(dialog!!)
         viewModelCreate.create(transformer)
     }
 

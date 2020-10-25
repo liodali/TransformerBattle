@@ -6,4 +6,6 @@
     <dimen name="size_name_feature_transformer">14dp</dimen>
     <dimen name="size_progress_bar_feature_transformer">18dp</dimen>
     <dimen name="radiusCardDialog">8dp</dimen>
+    <dimen name="icon_empty">96dp</dimen>
+    <dimen name="icon_empty_padding">8dp</dimen>
 </resources>

@@ -9,6 +9,11 @@ enum class TeamTransformer(val v:String) {
     @SerializedName("D")
     DECEPTICON("D"),
 }
+data class TransformerList(
+    @SerializedName("transformers")
+    val transformers:List<Transformer>
+)
+
 data class Transformer(
     val id:String="",
     val name: String,

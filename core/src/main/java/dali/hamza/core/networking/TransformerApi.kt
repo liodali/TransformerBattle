@@ -1,6 +1,7 @@
 package dali.hamza.core.networking
 
 import dali.hamza.domain.model.Transformer
+import dali.hamza.domain.model.TransformerList
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -14,8 +15,11 @@ interface TransformerApi {
     @GET("allspark")
     suspend fun getToken(): Response<String>
 
+    @Headers(
+        "Content-Type: application/json"
+    )
     @GET("transformers")
-    suspend fun getTransformers(@Header("Authorization") authorization: String): Response<List<Transformer>>
+    suspend fun getTransformers(@Header("Authorization") authorization: String): Response<TransformerList>
 
     @Headers(
         "Content-Type: application/json"

@@ -33,9 +33,8 @@ class TransformerRepository @Inject constructor(
     private val api: TransformerApi,
     private val session: SessionManager,
 ) :
-    BaseRepository(),
     ITransformerRepository {
-    override suspend fun getAll(): Result<List<Transformer>> {
+    override suspend fun getAll(): Result<TransformerList> {
         return try {
             val token: String = session.getValue(SessionManager.tokenKey) as String
             api.getTransformers("${SessionManager.bearer}${token}").data()

@@ -16,6 +16,8 @@
     <string name="create_autobot_title">Create new Autobot</string>
     <string name="create_decepticon_title">Create new Decepticon</string>
     <string name="loading_create_transformer">creation of %s is in progress</string>
+    <string name="errorCreateTransformer">we cannot create your transformer</string>
+    <string name="emptyTransformerList">No transformer Available for battle</string>
 
 
     <string-array name="feature_name_transformer">
