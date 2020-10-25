@@ -6,7 +6,7 @@ class Utilities {
     companion object {
         const val CreateTransformerResquestCode: Int=101
         const val TEAM_TRANSFORMER: String = "TEAM_TRANSFORMER"
-        const val ID_TRANSFORMER: String = "ID_TRANSFORMER"
+        const val TRANSFORMER: String = "TRANSFORMER"
         const val BASE_URL = "https://transformers-api.firebaseapp.com"
         val drawableIcons = listOf<Int>(
             R.drawable.ic_axe,

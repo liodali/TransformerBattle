@@ -18,6 +18,11 @@
     <string name="loading_create_transformer">creation of %s is in progress</string>
     <string name="errorCreateTransformer">we cannot create your transformer</string>
     <string name="emptyTransformerList">No transformer Available for battle</string>
+    <string name="autobots_label">Autobots</string>
+    <string name="decepticon_label">Decepticon</string>
+    <string name="decepticonMessageWinner">"The winnser is the Decepticon "</string>
+    <string name="winnerMessage">The winnser is the %s</string>
+    <string name="cybertronDestroyed">Cybertron is Destroyed</string>
 
 
     <string-array name="feature_name_transformer">

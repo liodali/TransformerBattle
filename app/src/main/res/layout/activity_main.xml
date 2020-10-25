@@ -104,6 +104,7 @@
         android:clickable="true"
         android:contentDescription="start fight"
         android:focusable="true"
+        android:onClick="startBattle"
         android:text="@string/battle"
         app:elevation="3dp"
         app:fabSize="normal"

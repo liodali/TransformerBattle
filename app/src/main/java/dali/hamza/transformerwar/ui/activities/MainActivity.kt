@@ -18,6 +18,7 @@ import dali.hamza.transformerwar.databinding.ChargementBinding
 import dali.hamza.transformerwar.databinding.EmptyDataBinding
 import dali.hamza.transformerwar.models.State
 import dali.hamza.transformerwar.ui.adapter.TransformerAdapter
+import dali.hamza.transformerwar.ui.dialog.DialogGameFragment
 import dali.hamza.transformerwar.utilities.Utilities
 import dali.hamza.transformerwar.viewmodels.MainViewModel
 
@@ -30,6 +31,7 @@ class MainActivity : BaseActivity() {
     private lateinit var loadingBinding: ChargementBinding
     private lateinit var startBattle: ExtendedFloatingActionButton
     private lateinit var adapter: TransformerAdapter
+    private  var battleFragment:DialogGameFragment?=null
     private var listTransformers: MutableList<Transformer> =
         emptyList<Transformer>().toMutableList()
 
@@ -68,6 +70,9 @@ class MainActivity : BaseActivity() {
         if (list.isNotEmpty()) {
             listTransformers.clear()
             listTransformers.addAll(list)
+            listTransformers.sortByDescending {
+                it.rank
+            }
             adapter.notifyDataSetChanged()
         } else {
             hideLoading(true)
@@ -118,12 +123,32 @@ class MainActivity : BaseActivity() {
         startActivityForResult(intent, Utilities.CreateTransformerResquestCode)
     }
 
+    fun startBattle(view:View){
+        battleFragment=DialogGameFragment.newInstance(listTransformers)
+        battleFragment!!.show(supportFragmentManager,"game")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(battleFragment!=null){
+            battleFragment!!.dismiss()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             Utilities.CreateTransformerResquestCode -> {
                 if (resultCode == RESULT_OK) {
-
+                    val newTransformer=data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
+                    if(newTransformer!=null){
+                        listTransformers.add(newTransformer)
+                        listTransformers.sortByDescending {
+                            it.rank
+                        }
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
         }

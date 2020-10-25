@@ -52,6 +52,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //fragment ktx
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
+
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

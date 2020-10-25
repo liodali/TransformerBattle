@@ -1,6 +1,8 @@
 package dali.hamza.domain.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 enum class TeamTransformer(val v: String) {
     @SerializedName("A")
@@ -20,8 +22,9 @@ fun Transformer.ratingRank(): Int {
     return this.strength + this.intelligence + this.speed + this.endurance + this.rank + this.courage + this.firePower + this.skill
 }
 
+@Parcelize
 data class Transformer(
-    val id: String = "",
+    var id: String = "",
     val name: String,
     val team: TeamTransformer,
     val strength: Int,
@@ -33,10 +36,11 @@ data class Transformer(
     @SerializedName("firepower")
     val firePower: Int,
     val skill: Int,
-)
+) : Parcelable
 
 data class GameResult(
-    var winner: TeamTransformer?=null,
+    var winner: TeamTransformer? = null,
+    var isDraw: Boolean = false,
     var isFinished: Boolean = false,
     var currentBattle: Battle,
     var previousBattles: MutableList<Battle> = emptyList<Battle>().toMutableList(),
@@ -46,6 +50,6 @@ data class GameResult(
 data class Battle(
     val autobot: Transformer,
     val deception: Transformer,
-    var winnerBattle: TeamTransformer?=null,
-    var isDestroyed:Boolean=false,
+    var winnerBattle: TeamTransformer? = null,
+    var isDestroyed: Boolean = false,
 )

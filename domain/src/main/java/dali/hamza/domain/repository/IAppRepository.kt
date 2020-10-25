@@ -6,5 +6,5 @@ import dali.hamza.domain.model.Transformer
 
 interface IAppRepository {
     suspend fun retrieveToken():Result<String>
-    suspend fun playMatch(transformer: List<Transformer>): Result<GameResult>
+    suspend fun playMatch(listTransformers: List<Transformer>): Any
 }

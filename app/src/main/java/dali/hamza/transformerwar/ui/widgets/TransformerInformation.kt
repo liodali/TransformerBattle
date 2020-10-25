@@ -51,7 +51,7 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
             this.transformer!!.firePower,
             this.transformer!!.skill,
         )
-        for (x in 0..6) {
+        for (x in 0..7) {
             val drawable =
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     context.getDrawable(Utilities.drawableIcons[x])
@@ -78,7 +78,7 @@ class TransformerInformation(context: Context, attrs: AttributeSet?, defStyle: I
             this.transformer!!.firePower,
             this.transformer!!.skill,
         )
-        for (x in 0..6) {
+        for (x in 0..7) {
             val drawable =
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     context.getDrawable(Utilities.drawableIcons[x])

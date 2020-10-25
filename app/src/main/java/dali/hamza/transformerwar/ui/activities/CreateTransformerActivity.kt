@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import com.google.android.material.appbar.AppBarLayout
@@ -32,19 +33,18 @@ class CreateTransformerActivity : BaseActivity() {
     private lateinit var editInputLayout: TextInputLayout
     private lateinit var createOrModifyBt: Button
 
-    private var idTransformer: String? = null
     private var teamTransformer: TeamTransformer = TeamTransformer.AUTOBOTS
 
     private val viewModelCreate: CreateOrModifyViewModel by viewModels()
     private var dialog: Dialog? = null
-
+    private var transformer:Transformer?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTransformerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.idToolbarCreateTransformer)
 
-        idTransformer = intent.extras!!.getString(Utilities.ID_TRANSFORMER)
+        transformer = intent.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
 
         teamTransformer =
             if (intent.extras!!.getString(Utilities.TEAM_TRANSFORMER) == TeamTransformer.AUTOBOTS.v)
@@ -90,13 +90,12 @@ class CreateTransformerActivity : BaseActivity() {
         editInputLayout.boxStrokeColor = resources.getColor(colorID)
         editInputLayout.hintTextColor = ColorStateList.valueOf(resources.getColor(colorID))
         editInputLayout.editText!!.doOnTextChanged { text, _, _, _ ->
-            createOrModifyBt.isEnabled = !(text!!.isEmpty() || text!!.isBlank())
+            createOrModifyBt.isEnabled = !(text!!.isEmpty() || text.isBlank())
         }
         createOrModifyBt.background = if (teamTransformer == TeamTransformer.AUTOBOTS) {
-            resources.getDrawable(R.drawable.custom_autobot_button)
+            ResourcesCompat.getDrawable(resources,R.drawable.custom_autobot_button,null)
         } else {
-            resources.getDrawable(R.drawable.custom_button_decepticon)
-
+            ResourcesCompat.getDrawable(resources,R.drawable.custom_button_decepticon,null)
         }
         listTransformerInput.addAll(
             arrayListOf(
@@ -117,8 +116,14 @@ class CreateTransformerActivity : BaseActivity() {
                     dialog = null
                 }
                 if (result is Success<String>) {
+                    if(transformer!=null){
+                        transformer!!.id=result.data
+                    }else{
+                        createTransformerObject()
+                        transformer!!.id=result.data
+                    }
                     val intentResult =
-                        Intent().putExtra(Utilities.ID_TRANSFORMER, result.data)
+                        Intent().putExtra(Utilities.TRANSFORMER, transformer)
                     setResult(RESULT_OK, intentResult)
                     finish()//Utilities.CreateTransformerResquestCode
                 } else {
@@ -128,9 +133,8 @@ class CreateTransformerActivity : BaseActivity() {
             }
         })
     }
-
-    fun createOrModify(view: View) {
-        val transformer = Transformer(
+    private fun createTransformerObject(){
+        transformer = Transformer(
             id = "",
             editInputLayout.editText!!.text.toString(),
             team = teamTransformer,
@@ -143,12 +147,15 @@ class CreateTransformerActivity : BaseActivity() {
             firePower = listTransformerInput[6].getValue(),
             skill = listTransformerInput[7].getValue(),
         )
+    }
+    fun createOrModify(view: View) {
+        createTransformerObject()
         dialog = ProgressDialog.progressDialog(
             this,
-            resources.getString(R.string.loading_create_transformer, transformer.name)
+            resources.getString(R.string.loading_create_transformer, transformer!!.name)
         )
         showDialog(dialog!!)
-        viewModelCreate.create(transformer)
+        viewModelCreate.create(transformer!!)
     }
 
     fun cancel(view: View) {
