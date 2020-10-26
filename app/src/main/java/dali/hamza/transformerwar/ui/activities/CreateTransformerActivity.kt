@@ -140,52 +140,35 @@ class CreateTransformerActivity : BaseActivity() {
         }
 
 
-        if (transformer == null) {
-            viewModelCreate.getResult().observe(this, { result ->
-                if (result != null) {
-                    if (dialog != null) {
-                        dismissDialog(dialog)
-                        dialog = null
-                    }
-                    if (result is Success<String>) {
-                        if (transformer != null) {
-                            transformer!!.id = result.data
-                        } else {
-                            createTransformerObject()
-                            transformer!!.id = result.data
-                        }
-                        val intentResult =
-                            Intent().putExtra(Utilities.TRANSFORMER, transformer)
-                        setResult(RESULT_OK, intentResult)
-                        finish()
-                    } else {
-                        showSnackBar(getString(R.string.errorCreateTransformer), binding.root)
-                    }
+
+        viewModelCreate.getResult().observe(this, { result ->
+            if (result != null) {
+                if (dialog != null) {
+                    dismissDialog(dialog)
+                    dialog = null
                 }
-            })
-        } else {
-            viewModelCreate.getTransformerModifiedResult().observe(this, { result ->
-                if (result != null) {
-                    if (dialog != null) {
-                        dismissDialog(dialog)
-                        dialog = null
-                    }
-                    if (result is Success<Transformer>) {
-                        val intentResult =
-                            Intent().putExtra(Utilities.TRANSFORMER, transformer)
-                        setResult(RESULT_OK, intentResult)
-                        finish()
+                if (result is Success<Transformer>) {
+
+                    val intentResult =
+                        Intent().putExtra(Utilities.TRANSFORMER, result.data)
+                    setResult(RESULT_OK, intentResult)
+                    finish()
+
+                } else {
+                    if (transformer==null || transformer!!.id.isEmpty()) {
+                        showSnackBar(getString(R.string.errorCreateTransformer), binding.root)
                     } else {
                         showSnackBar(getString(R.string.errorModificationTransformer), binding.root)
                     }
                 }
-            });
-        }
+            }
+        })
+
     }
 
     private fun createTransformerObject() {
         transformer = Transformer(
-            id = transformer?.id?:"",
+            id = transformer?.id ?: "",
             name = editInputLayout.editText!!.text.toString(),
             team = teamTransformer,
             strength = listTransformerInput[0].getValue(),

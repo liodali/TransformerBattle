@@ -37,7 +37,7 @@ data class Transformer(
     val firePower: Int,
     val skill: Int,
     @SerializedName("team_icon")
-    val icon:String
+    val icon: String = ""
 ) : Parcelable
 
 data class GameResult(

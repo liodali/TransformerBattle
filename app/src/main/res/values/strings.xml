@@ -34,6 +34,8 @@
     <string name="modifyLabel">Modify</string>
     <string name="change_team_bt_label">become %s</string>
     <string name="errorModificationTransformer">Ops!we cannot modify this transformer</string>
+    <string name="SuccessAddedTransformer">New transformer was added succefully</string>
+    <string name="SuccessModifiedTransformer">%s was modified successfully</string>
 
 
     <string-array name="feature_name_transformer">

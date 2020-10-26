@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.squareup.picasso.Picasso
 import dali.hamza.domain.model.TeamTransformer
 import dali.hamza.domain.model.Transformer
 import dali.hamza.domain.model.ratingRank
@@ -25,25 +26,13 @@ class TransformerAdapter(
                 bindingView.root.context.resources,
                 R.drawable.ic_decepticon, null
             )
-            var colorDrawable = R.color.purple_700
             if (data.team == TeamTransformer.AUTOBOTS) {
                 drawable = ResourcesCompat.getDrawable(
                     bindingView.root.context.resources,
                     R.drawable.ic_autobot, null
                 )
-                colorDrawable = android.R.color.holo_red_light
             }
-            bindingView.imageView.setImageDrawable(
-                drawable
-            )
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                bindingView.imageView.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        bindingView.root.context,
-                        colorDrawable
-                    )
-                )
-            }
+            Picasso.get().load(data.icon).placeholder(drawable!!).into(bindingView.imageView)
             bindingView.idRankRatingItemTransformer.text =
                 bindingView.root.context.resources.getString(
                     R.string.rating_rank,

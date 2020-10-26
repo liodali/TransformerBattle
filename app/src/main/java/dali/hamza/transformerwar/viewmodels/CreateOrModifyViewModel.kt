@@ -18,17 +18,13 @@ class CreateOrModifyViewModel @ViewModelInject constructor(
     private val modifyTransformerInteractor: ModifyTransformerInteractor
 ) : ViewModel() {
 
-    private val liveDataResult: MutableLiveData<Result<String>> = MutableLiveData()
-    private val liveDataTransformerModifiedResult: MutableLiveData<Result<Transformer>> =
-        MutableLiveData()
+    private val liveDataResult: MutableLiveData<Result<Transformer>> = MutableLiveData()
 
-    fun getResult(): LiveData<Result<String>> {
+    fun getResult(): LiveData<Result<Transformer>> {
         return liveDataResult
     }
 
-    fun getTransformerModifiedResult(): LiveData<Result<Transformer>> {
-        return liveDataTransformerModifiedResult
-    }
+
 
     fun create(transformer: Transformer) {
         viewModelScope.launch {
@@ -43,7 +39,7 @@ class CreateOrModifyViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             val result = modifyTransformerInteractor.invoke(transformer)
             withContext(Main) {
-                liveDataTransformerModifiedResult.value = result
+                liveDataResult.value = result
             }
 
         }

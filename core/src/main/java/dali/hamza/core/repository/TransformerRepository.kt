@@ -52,16 +52,10 @@ class TransformerRepository @Inject constructor(
 
     }
 
-    override suspend fun insertTransformer(transformer: Transformer): Result<String> {
+    override suspend fun insertTransformer(transformer: Transformer): Result<Transformer> {
         return try {
             val token: String = session.getValue(SessionManager.tokenKey) as String
-            val result =
-                api.addNewTransformers("${SessionManager.bearer}${token}", transformer).data()
-            return if (result is Success<Transformer>) {
-                Success(result.data.id)
-            } else {
-                Failure(AppError(Throwable("error to create transformer")))
-            }
+            api.addNewTransformers("${SessionManager.bearer}${token}", transformer).data()
 
         } catch (e: Exception) {
             Failure(

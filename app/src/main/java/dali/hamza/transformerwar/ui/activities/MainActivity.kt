@@ -224,6 +224,10 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
                     selectorTeam.animate()
                         .translationYBy(0f)
                         .translationY(-250f).duration = 500
+                    showSnackBar(
+                        resources.getString(R.string.SuccessAddedTransformer),
+                        binding.root
+                    )
                     val newTransformer =
                         data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
                     if (newTransformer != null) {
@@ -243,6 +247,10 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
                 if (resultCode == RESULT_OK) {
                     val transformer =
                         data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
+                    showSnackBar(
+                        resources.getString(R.string.SuccessModifiedTransformer,transformer!!.name),
+                        binding.root
+                    )
                     if (transformer != null) {
                         val index = listTransformers.indexOfFirst {
                             it.id == transformer.id
