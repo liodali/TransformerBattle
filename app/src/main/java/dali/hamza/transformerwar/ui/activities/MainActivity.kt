@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import dali.hamza.domain.model.Success
@@ -19,19 +19,23 @@ import dali.hamza.transformerwar.databinding.EmptyDataBinding
 import dali.hamza.transformerwar.models.State
 import dali.hamza.transformerwar.ui.adapter.TransformerAdapter
 import dali.hamza.transformerwar.ui.dialog.DialogGameFragment
+import dali.hamza.transformerwar.ui.widgets.TransformerCount
 import dali.hamza.transformerwar.utilities.Utilities
 import dali.hamza.transformerwar.viewmodels.MainViewModel
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyBinding: EmptyDataBinding
     private lateinit var loadingBinding: ChargementBinding
+    private lateinit var autobotsCount: TransformerCount
+    private lateinit var decepticonCount: TransformerCount
+    private lateinit var selectorTeam: MaterialCardView
     private lateinit var startBattle: ExtendedFloatingActionButton
     private lateinit var adapter: TransformerAdapter
-    private  var battleFragment:DialogGameFragment?=null
+    private var battleFragment: DialogGameFragment? = null
     private var listTransformers: MutableList<Transformer> =
         emptyList<Transformer>().toMutableList()
 
@@ -43,8 +47,18 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initUI()
+        setSupportActionBar(binding.idMainToolbar)
+        title = resources.getString(R.string.transformers)
 
-        mainViewModel.getViewState().observe(this, Observer { state ->
+        binding.idSelectorTransformerTeam.idSelectorAutobot.setOnClickListener {
+            openCreateNewTranformer(TeamTransformer.AUTOBOTS.v)
+        }
+
+        binding.idSelectorTransformerTeam.idSelectorDecepticon.setOnClickListener {
+            openCreateNewTranformer(TeamTransformer.DECEPTICON.v)
+        }
+
+        mainViewModel.getViewState().observe(this, { state ->
             if (state != null) {
                 if (state.state == State.LOADING) {
                     showLoading()
@@ -66,13 +80,14 @@ class MainActivity : BaseActivity() {
         mainViewModel.retrieveListTransformers()
     }
 
-    fun listDataChanged(list: List<Transformer>) {
+    private fun listDataChanged(list: List<Transformer>) {
         if (list.isNotEmpty()) {
             listTransformers.clear()
             listTransformers.addAll(list)
             listTransformers.sortByDescending {
                 it.rank
             }
+            updateCountOfTransformers()
             adapter.notifyDataSetChanged()
         } else {
             hideLoading(true)
@@ -80,15 +95,34 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun updateCountOfTransformers() {
+        autobotsCount.setCount(
+            listTransformers.filter {
+                it.team == TeamTransformer.AUTOBOTS
+            }.size
+        )
+
+        decepticonCount.setCount(
+            listTransformers.filter {
+                it.team == TeamTransformer.DECEPTICON
+            }.size
+        )
+    }
+
     private fun initUI() {
         recyclerView = binding.idRecyclerViewTransformers
         startBattle = binding.floatingActionButton
         emptyBinding = binding.idMainEmptyData
         loadingBinding = binding.idMainLoadingLayout
-        adapter = TransformerAdapter(listTransformers)
+        selectorTeam = binding.idSelectorTransformerTeam.idTransformerSelector
+        autobotsCount = binding.idAutobotCount
+        decepticonCount = binding.idDecepticonCount
+        adapter = TransformerAdapter(listTransformers, this)
         recyclerView.adapter = adapter
-
         showLoading()
+
+        loadingBinding.idChargementText.text =
+            resources.getString(R.string.loading_create_transformer)
         emptyBinding.idTextEmpty.text = resources.getString(R.string.emptyTransformerList)
     }
 
@@ -118,20 +152,34 @@ class MainActivity : BaseActivity() {
     }
 
     fun createTransformer(view: View) {
+        if (selectorTeam.translationY < 0)
+            selectorTeam.animate()
+                .translationYBy(-150f)
+                .translationY(0f).duration = 500//200ms
+        else {
+            selectorTeam.animate()
+                .translationYBy(0f)
+                .translationY(-250f).duration = 500
+        }
+
+    }
+
+    private fun openCreateNewTranformer(team: String) {
+
         val intent = Intent(this, CreateTransformerActivity::class.java)
-        intent.putExtra(Utilities.TEAM_TRANSFORMER, TeamTransformer.AUTOBOTS.v)
+        intent.putExtra(Utilities.TEAM_TRANSFORMER, team)
         startActivityForResult(intent, Utilities.CreateTransformerResquestCode)
     }
 
-    fun startBattle(view:View){
-        battleFragment=DialogGameFragment.newInstance(listTransformers)
-        battleFragment!!.show(supportFragmentManager,"game")
+    fun startBattle(view: View) {
+        battleFragment = DialogGameFragment.newInstance(listTransformers)
+        battleFragment!!.show(supportFragmentManager, "game")
 
     }
 
     override fun onStop() {
         super.onStop()
-        if(battleFragment!=null){
+        if (battleFragment != null) {
             battleFragment!!.dismiss()
         }
     }
@@ -140,13 +188,19 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             Utilities.CreateTransformerResquestCode -> {
+
                 if (resultCode == RESULT_OK) {
-                    val newTransformer=data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
-                    if(newTransformer!=null){
+                    selectorTeam.animate()
+                        .translationYBy(0f)
+                        .translationY(-250f).duration = 500
+                    val newTransformer =
+                        data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
+                    if (newTransformer != null) {
                         listTransformers.add(newTransformer)
                         listTransformers.sortByDescending {
                             it.rank
                         }
+                        updateCountOfTransformers()
                         adapter.notifyDataSetChanged()
                     }
                 }
@@ -160,6 +214,14 @@ class MainActivity : BaseActivity() {
         // This bundle will be passed to onCreate if the process is
         // killed and restarted.
 
+    }
+
+    override fun editTransformer(transformer: Transformer) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTransformer(id: String) {
+        TODO("Not yet implemented")
     }
 
 }

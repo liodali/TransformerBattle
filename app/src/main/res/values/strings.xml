@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">TransformerWar</string>
+    <string name="app_name">Transformer War</string>
     <string name="battle">battle</string>
-    <string name="cancel_label">cancel</string>
+    <string name="transformers">Transformers</string>
+    <string name="cancel_label">Cancel</string>
     <string name="create_label">Create</string>
 
     <string name="strength">strength</string>
@@ -23,6 +24,7 @@
     <string name="decepticonMessageWinner">"The winnser is the Decepticon "</string>
     <string name="winnerMessage">The winnser is the %s</string>
     <string name="cybertronDestroyed">Cybertron is Destroyed</string>
+    <string name="rating_rank">rating rank : %s</string>
 
 
     <string-array name="feature_name_transformer">

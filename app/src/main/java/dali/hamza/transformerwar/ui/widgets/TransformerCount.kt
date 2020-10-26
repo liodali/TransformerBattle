@@ -39,6 +39,8 @@ class TransformerCount(context: Context, attrs: AttributeSet?, defStyle: Int?) :
     fun setCount(v:Int){
         count=v
         textViewCount.text="$count"
+        invalidate()
+        requestLayout()
     }
     init {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.TransformerCount)

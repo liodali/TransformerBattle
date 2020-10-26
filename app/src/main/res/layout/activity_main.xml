@@ -39,6 +39,7 @@
                 android:orientation="horizontal">
 
                 <dali.hamza.transformerwar.ui.widgets.TransformerCount
+                    android:id="@+id/id_autobot_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -47,6 +48,7 @@
                     app:team="AUTOBOTS" />
 
                 <dali.hamza.transformerwar.ui.widgets.TransformerCount
+                    android:id="@+id/id_decepticon_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -93,6 +95,7 @@
         <include
             android:id="@+id/id_main_loading_layout"
             layout="@layout/chargement" />
+
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -113,4 +116,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:useCompatPadding="true" />
+
+    <include
+        android:id="@+id/id_selector_transformer_team"
+        layout="@layout/select_team_transformer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_main_appbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
