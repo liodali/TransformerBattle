@@ -44,7 +44,7 @@ class WinnerWidget(context: Context, attrs: AttributeSet?, defStyle: Int?) :
         when {
             team != null && team == TeamTransformer.AUTOBOTS -> {
 
-                winner(R.drawable.ic_autobot,android.R.color.holo_red_light,resources.getString(R.string.winnerMessage,"Autotbots"))
+                winner(R.drawable.ic_autobot,android.R.color.holo_red_light,resources.getString(R.string.winnerMessage,"Autobots"))
             }
             team != null && team == TeamTransformer.DECEPTICON -> {
                 winner(R.drawable.ic_decepticon,R.color.purple_500,resources.getString(R.string.winnerMessage,"Decepticon"))

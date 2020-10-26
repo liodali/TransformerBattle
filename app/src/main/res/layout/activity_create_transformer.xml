@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 app:iconDrawable="@drawable/ic_axe"
                 app:name="@string/strength"
-                app:value="5" />
+                app:value="1" />
 
             <dali.hamza.transformerwar.ui.widgets.TransformerInputFeature
                 android:id="@+id/id_intelligence_information_input"
