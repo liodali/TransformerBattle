@@ -6,26 +6,47 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dali.hamza.core.interactor.CreateTransformerInteractor
+import dali.hamza.core.interactor.ModifyTransformerInteractor
 import dali.hamza.domain.model.Result
 import dali.hamza.domain.model.Transformer
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateOrModifyViewModel @ViewModelInject constructor(
-    private val createTransformerInteractor: CreateTransformerInteractor
+    private val createTransformerInteractor: CreateTransformerInteractor,
+    private val modifyTransformerInteractor: ModifyTransformerInteractor
 ) : ViewModel() {
 
-   private val liveDataResult: MutableLiveData<Result<String>> = MutableLiveData()
+    private val liveDataResult: MutableLiveData<Result<String>> = MutableLiveData()
+    private val liveDataTransformerModifiedResult: MutableLiveData<Result<Transformer>> =
+        MutableLiveData()
 
-    fun getResult():LiveData<Result<String>>{
+    fun getResult(): LiveData<Result<String>> {
         return liveDataResult
+    }
+
+    fun getTransformerModifiedResult(): LiveData<Result<Transformer>> {
+        return liveDataTransformerModifiedResult
     }
 
     fun create(transformer: Transformer) {
         viewModelScope.launch {
             val result = createTransformerInteractor.invoke(transformer)
-            liveDataResult.postValue(result)
+            withContext(Main) {
+                liveDataResult.value = result
+            }
         }
     }
 
+    fun modify(transformer: Transformer) {
+        viewModelScope.launch {
+            val result = modifyTransformerInteractor.invoke(transformer)
+            withContext(Main) {
+                liveDataTransformerModifiedResult.value = result
+            }
+
+        }
+    }
 
 }

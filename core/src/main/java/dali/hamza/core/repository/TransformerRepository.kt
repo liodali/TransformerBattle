@@ -76,7 +76,6 @@ class TransformerRepository @Inject constructor(
             api.modifyTransformer(
                 authorization = token,
                 transformer = transformer,
-                id = transformer.id
             ).data()
         } catch (e: Exception) {
             Failure(AppError(Throwable(e.message)))

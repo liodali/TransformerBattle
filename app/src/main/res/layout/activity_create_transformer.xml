@@ -26,23 +26,39 @@
         android:id="@+id/linear_editText_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_name_transformer_textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_weight="0.8"
             android:hint="@string/transformer_name_label_hint">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:inputType="text"
-                />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/id_change_team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:visibility="gone"
+            android:onClick="changeTeamOfCurrentTransformer"
+            android:background="@drawable/custom_autobot_button"
+            app:backgroundTint="@null"
+            android:textSize="12sp"
+            android:text="@string/change_team_bt_label" />
 
     </LinearLayout>
 

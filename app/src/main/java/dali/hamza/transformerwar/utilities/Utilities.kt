@@ -4,7 +4,8 @@ import dali.hamza.transformerwar.R
 
 class Utilities {
     companion object {
-        const val CreateTransformerResquestCode: Int=101
+        const val CreateTransformerRequestCode: Int=101
+        const val ModifyTransformerRequestCode: Int=102
         const val TEAM_TRANSFORMER: String = "TEAM_TRANSFORMER"
         const val TRANSFORMER: String = "TRANSFORMER"
         const val BASE_URL = "https://transformers-api.firebaseapp.com"

@@ -96,6 +96,9 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
                         resources.getString(R.string.SuccessDeleteTransformer),
                         binding.root,
                     )
+                    if (listTransformers.isEmpty()) {
+                        hideLoading(true)
+                    }
                 } else {
                     showSnackBar(
                         resources.getString(R.string.impossibleToDeleteTransformer),
@@ -196,7 +199,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
 
         val intent = Intent(this, CreateTransformerActivity::class.java)
         intent.putExtra(Utilities.TEAM_TRANSFORMER, team)
-        startActivityForResult(intent, Utilities.CreateTransformerResquestCode)
+        startActivityForResult(intent, Utilities.CreateTransformerRequestCode)
     }
 
     fun startBattle(view: View) {
@@ -215,7 +218,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            Utilities.CreateTransformerResquestCode -> {
+            Utilities.CreateTransformerRequestCode -> {
 
                 if (resultCode == RESULT_OK) {
                     selectorTeam.animate()
@@ -230,6 +233,29 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
                         }
                         updateCountOfTransformers()
                         adapter.notifyDataSetChanged()
+                        if (listTransformers.size == 1) {
+                            hideLoading(false)
+                        }
+                    }
+                }
+            }
+            Utilities.ModifyTransformerRequestCode -> {
+                if (resultCode == RESULT_OK) {
+                    val transformer =
+                        data!!.extras!!.getParcelable<Transformer>(Utilities.TRANSFORMER)
+                    if (transformer != null) {
+                        val index = listTransformers.indexOfFirst {
+                            it.id == transformer.id
+                        }
+                        listTransformers[index] = transformer
+                        listTransformers.sortByDescending {
+                            it.rank
+                        }
+                        updateCountOfTransformers()
+                        adapter.notifyDataSetChanged()
+                        if (listTransformers.size == 1) {
+                            hideLoading(false)
+                        }
                     }
                 }
             }
@@ -245,7 +271,10 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
     }
 
     override fun editTransformer(transformer: Transformer) {
-        TODO("Not yet implemented")
+        val intent = Intent(this, CreateTransformerActivity::class.java)
+        intent.putExtra(Utilities.TEAM_TRANSFORMER, transformer.team.v)
+        intent.putExtra(Utilities.TRANSFORMER, transformer)
+        startActivityForResult(intent, Utilities.ModifyTransformerRequestCode)
     }
 
     override fun deleteTransformer(id: String) {

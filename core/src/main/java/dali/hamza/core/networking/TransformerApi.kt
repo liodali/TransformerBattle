@@ -36,10 +36,12 @@ interface TransformerApi {
         @Path("id") id: String
     ): Response<*>
 
-    @PUT("transformers/{id}")
+    @Headers(
+        "Content-Type: application/json"
+    )
+    @PUT("transformers")
     suspend fun modifyTransformer(
         @Header("Authorization") authorization: String,
-        @Path("id") id: String,
         @Body transformer: Transformer,
     ): Response<Transformer>
 

@@ -83,6 +83,7 @@ class TransformerInputFeature(context: Context, attrs: AttributeSet?, defStyle: 
     fun setProgressValue(value: Int) {
         this.value = value
         progressBarValue.progress = this.value
+        textValue.text = "${value * 10}%"
     }
 
     private fun initAttrs(context: Context, attrs: AttributeSet) {
