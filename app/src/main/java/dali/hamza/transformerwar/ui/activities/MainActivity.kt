@@ -1,5 +1,6 @@
 package dali.hamza.transformerwar.ui.activities
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,6 +20,7 @@ import dali.hamza.transformerwar.databinding.EmptyDataBinding
 import dali.hamza.transformerwar.models.State
 import dali.hamza.transformerwar.ui.adapter.TransformerAdapter
 import dali.hamza.transformerwar.ui.dialog.DialogGameFragment
+import dali.hamza.transformerwar.ui.dialog.ProgressDialog
 import dali.hamza.transformerwar.ui.widgets.TransformerCount
 import dali.hamza.transformerwar.utilities.Utilities
 import dali.hamza.transformerwar.viewmodels.MainViewModel
@@ -41,6 +43,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
 
     private val mainViewModel: MainViewModel by viewModels()
 
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
         setSupportActionBar(binding.idMainToolbar)
         title = resources.getString(R.string.transformers)
 
+        //listener to select which type of transformer you want to create
         binding.idSelectorTransformerTeam.idSelectorAutobot.setOnClickListener {
             openCreateNewTranformer(TeamTransformer.AUTOBOTS.v)
         }
@@ -57,7 +61,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
         binding.idSelectorTransformerTeam.idSelectorDecepticon.setOnClickListener {
             openCreateNewTranformer(TeamTransformer.DECEPTICON.v)
         }
-
+        // observe retrieve list of transformers
         mainViewModel.getViewState().observe(this, { state ->
             if (state != null) {
                 if (state.state == State.LOADING) {
@@ -73,6 +77,30 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
                     } else {
                         hideLoading(true)
                     }
+                }
+            }
+        })
+        // observe delete event
+        mainViewModel.getEventDelete().observe(this, { event ->
+            if (event != null) {
+                dismissDialog(dialog!!)
+                if (event is Success) {
+                    val id = event.data
+                    val index = listTransformers.indexOfFirst {
+                        it.id == id
+                    }
+                    listTransformers.removeAt(index)
+                    adapter.notifyDataSetChanged()
+                    updateCountOfTransformers()
+                    showSnackBar(
+                        resources.getString(R.string.SuccessDeleteTransformer),
+                        binding.root,
+                    )
+                } else {
+                    showSnackBar(
+                        resources.getString(R.string.impossibleToDeleteTransformer),
+                        binding.root,
+                    )
                 }
             }
         })
@@ -122,7 +150,7 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
         showLoading()
 
         loadingBinding.idChargementText.text =
-            resources.getString(R.string.loading_create_transformer)
+            resources.getString(R.string.loading_list_transformer)
         emptyBinding.idTextEmpty.text = resources.getString(R.string.emptyTransformerList)
     }
 
@@ -221,7 +249,12 @@ class MainActivity : BaseActivity(), TransformerAdapter.TransformerAction {
     }
 
     override fun deleteTransformer(id: String) {
-        TODO("Not yet implemented")
+        dialog = ProgressDialog.progressDialog(
+            this,
+            resources.getString(R.string.deleteTransformerMessage)
+        )
+        showDialog(dialog!!)
+        mainViewModel.deleteTransformer(id)
     }
 
 }

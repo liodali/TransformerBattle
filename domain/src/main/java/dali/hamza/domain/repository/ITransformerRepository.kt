@@ -7,6 +7,6 @@ import dali.hamza.domain.model.TransformerList
 interface ITransformerRepository {
     suspend fun getAll(): Result<TransformerList>
     suspend fun insertTransformer(transformer: Transformer): Result<String>
-    suspend fun update(transformer: Transformer)
-    suspend fun delete(idTransformer: String)
+    suspend fun update(transformer: Transformer):Result<Transformer>
+    suspend fun delete(idTransformer: String):Result<String>
 }

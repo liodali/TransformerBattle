@@ -34,13 +34,13 @@ interface TransformerApi {
     suspend fun deleteTransformer(
         @Header("Authorization") authorization: String,
         @Path("id") id: String
-    ): Response<Result<Nothing>>
+    ): Response<*>
 
     @PUT("transformers/{id}")
     suspend fun modifyTransformer(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
         @Body transformer: Transformer,
-    ): Response<Result<Transformer>>
+    ): Response<Transformer>
 
 }

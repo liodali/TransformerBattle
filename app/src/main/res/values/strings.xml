@@ -25,6 +25,10 @@
     <string name="winnerMessage">The winnser is the %s</string>
     <string name="cybertronDestroyed">Cybertron is Destroyed</string>
     <string name="rating_rank">rating rank : %s</string>
+    <string name="deleteTransformerMessage">deleting...</string>
+    <string name="impossibleToDeleteTransformer">Opss! We cannot delete the transformer</string>
+    <string name="SuccessDeleteTransformer">The transformer was deleted succefully</string>
+    <string name="loading_list_transformer">loading transformers ...</string>
 
 
     <string-array name="feature_name_transformer">
