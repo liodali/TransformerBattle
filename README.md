@@ -5,7 +5,7 @@
 ##### In this project, we implement the  clean architecture
 * we have 3 layer:
 
-  * <srong>App module </string>  : This module contains all of the code related to the UI/Presentation layer such as activities,fragment,dialog,wodget  and contain viewmodel,dependency injection module app 
+  * <srong>App module </string>  : This module contains all of the code related to the UI/Presentation layer such as activities,fragment,dialog,custom views  and contain viewmodel,dependency injection module app 
   * <srong>Core</string> : holds all concrete implementations of our repositories,usecaes and other data sources like  network
   * <srong>Domain module </string>  : contain all interfaces of repositories ,usecase and data classes
 
