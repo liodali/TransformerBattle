@@ -30,4 +30,17 @@ interface TransformerApi {
         @Body transformer: Transformer
     ): Response<Transformer>
 
+    @DELETE("transformers/{id}")
+    suspend fun deleteTransformer(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String
+    ): Response<Result<Nothing>>
+
+    @PUT("transformers/{id}")
+    suspend fun modifyTransformer(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+        @Body transformer: Transformer,
+    ): Response<Result<Transformer>>
+
 }
