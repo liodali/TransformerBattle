@@ -14,11 +14,5 @@
 > we used hilt as dependency injection for this project and retorfit to make http calls
 
 ### screenshots
-<img width="150" height="300" src="/screenshot/listTransformers.png"  alt="list of transformers">
-<img width="150" height="300" src="/screenshot/showTeamSelector.png" alt="popup to select team of new transformer">
-<img width="150" height="300" src="/screenshot/autobotsFormCreate.png" alt="game stated">
-<img width="150" height="300" src="/screenshot/decepticonFormCreaion.png" alt="game was terminated">
-
-<img width="150" height="300" src="/screenshot/battleStarted.png" alt="game stated">
-
-<img width="150" height="300" src="/screenshot/gameFinished.png" alt="game was terminated"> 
+<img width="150" height="300" src="/screenshot/listTransformers.png"  alt="list of transformers"> <img width="150" height="300" src="/screenshot/showTeamSelector.png" alt="popup to select team of new transformer"> <img width="150" height="300" src="/screenshot/autobotsFormCreate.png" alt="game stated">
+<img width="150" height="300" src="/screenshot/decepticonFormCreaion.png" alt="game was terminated"> <img width="150" height="300" src="/screenshot/battleStarted.png" alt="game stated"> <img width="150" height="300" src="/screenshot/gameFinished.png" alt="game was terminated"> 
